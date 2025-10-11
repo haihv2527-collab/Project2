@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.project2.controllers.SignInController"
+            prefWidth="420" prefHeight="600"
+            style="-fx-background-color: linear-gradient(to bottom right, #66ccff, #9999ff); -fx-background-radius: 12;">
+    <VBox alignment="CENTER" spacing="10.0" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="20">
+        <Label text="Logo" style="-fx-font-size: 18px; -fx-text-fill: #ff6666; -fx-font-weight: bold;" />
+        <Label text="Welcome to restaurant" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+        <Label text="Please login using the form below" style="-fx-font-size: 12px; -fx-text-fill: #333;"/>
+
+        <VBox spacing="8">
+            <Label text="Email" />
+            <TextField fx:id="usernameField" promptText="example@gmail.com" prefWidth="300"/>
+
+            <Label text="Password" />
+            <PasswordField fx:id="passwordField" promptText="Password" prefWidth="300"/>
+        </VBox>
+
+        <HBox spacing="60" alignment="CENTER_LEFT">
+            <CheckBox fx:id="rememberMe" text="Remember me" />
+            <Hyperlink text="Forgot password?" />
+        </HBox>
+
+        <Button text="Log in"
+                onAction="#onLoginButtonClick"
+                style="-fx-background-color: linear-gradient(to right, #cc33ff, #3366ff); -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 8 24 8 24;"/>
+
+        <Label fx:id="messageLabel" style="-fx-text-fill: red;"/>
+
+        <HBox alignment="CENTER" spacing="10">
+            <Label text="───────────────"/>
+            <Label text="Or" style="-fx-font-size: 12px; -fx-text-fill: #444;"/>
+            <Label text="───────────────"/>
+        </HBox>
+
+        <VBox spacing="8" alignment="CENTER">
+            <Button text="Continue with Google" onAction="#onGoogleContinue" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-padding: 8 24;">
+                <graphic>
+                    <ImageView fitHeight="16" fitWidth="16" preserveRatio="true">
+                        <image>
+                            <Image url="https://cdn-icons-png.flaticon.com/512/2991/2991148.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button text="Continue with Apple" style="-fx-background-color: white; -fx-border-color: #ccc; -fx-padding: 8 24;">
+                <graphic>
+                    <ImageView fitHeight="16" fitWidth="16" preserveRatio="true">
+                        <image>
+                            <Image url="https://cdn-icons-png.flaticon.com/512/0/747.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+        </VBox>
+
+        <HBox alignment="CENTER" spacing="4">
+            <Label text="Don't have account?" />
+            <Hyperlink text="Sign Up" onAction="#onSignUpLink"/>
+        </HBox>
+    </VBox>
+</AnchorPane>
