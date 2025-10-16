@@ -1,0 +1,53 @@
+.root {
+    -fx-font-family: "Poppins", sans-serif;
+    -fx-background-color: white;
+}
+
+.left-pane {
+    -fx-background-color: #1E90FF;
+    -fx-text-fill: white;
+    -fx-padding: 40;
+    -fx-pref-width: 250;
+    -fx-border-radius: 0 30 30 0;
+    -fx-background-radius: 0 30 30 0;
+}
+
+.form-pane {
+    -fx-background-color: white;
+    -fx-padding: 40;
+    -fx-pref-width: 250;
+}
+
+.form-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+.welcome-text {
+    -fx-font-size: 18px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.sub-text {
+    -fx-font-size: 13px;
+    -fx-text-fill: white;
+}
+
+.login-btn, .switch-btn {
+    -fx-background-color: #1E90FF;
+    -fx-text-fill: white;
+    -fx-padding: 8 16;
+    -fx-background-radius: 8;
+}
+
+.login-btn:hover, .switch-btn:hover {
+    -fx-background-color: #0066cc;
+}
+
+.forgot-link {
+    -fx-text-fill: #555;
+    -fx-font-size: 12px;
+    -fx-alignment: center-right;
+}
