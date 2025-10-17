@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane fx:id="root" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.project2.controllers.SignUpController"
+            stylesheets="@style.css">
+
+    <!-- Bên trái: form đăng ký -->
+    <center>
+        <VBox alignment="CENTER" spacing="15" styleClass="form-pane">
+            <Label text="Registration" styleClass="form-title"/>
+
+            <TextField fx:id="usernameField" promptText="User"/>
+            <TextField fx:id="emailField" promptText="Email"/>
+            <PasswordField fx:id="passwordField" promptText="Password"/>
+
+            <Button text="Registration" onAction="#onRegisterButtonClick" styleClass="login-btn"/>
+            <Label fx:id="messageLabel" textFill="red" style="-fx-font-size: 13;"/>
+        </VBox>
+    </center>
+
+    <!-- Bên phải: lời chào -->
+    <right>
+        <VBox alignment="CENTER" spacing="10" styleClass="left-pane">
+            <Label text="Welcome back to Restaurant!" styleClass="welcome-text"/>
+            <Label text="Already have an account?" styleClass="sub-text"/>
+            <Button text="Login" onAction="#onLoginLink" styleClass="switch-btn"/>
+        </VBox>
+    </right>
+</BorderPane>
+
+
