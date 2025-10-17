@@ -2,6 +2,8 @@ module com.example.project2 {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql; // for sqlite JDBC
+    requires java.prefs;
+
 
     opens com.example.project2 to javafx.fxml;
     opens com.example.project2.controllers to javafx.fxml;

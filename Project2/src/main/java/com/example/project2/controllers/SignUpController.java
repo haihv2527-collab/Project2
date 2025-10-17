@@ -1,73 +1,90 @@
 package com.example.project2.controllers;
 
+import com.example.project2.Main;
+import javafx.animation.FadeTransition;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.event.ActionEvent;
-
-import java.io.IOException;
+import javafx.util.Duration;
 
 public class SignUpController {
-
+    @FXML private TextField usernameField;
     @FXML private TextField emailField;
     @FXML private PasswordField passwordField;
-    @FXML private PasswordField confirmField;
-    @FXML private Label messageLabel;
+    @FXML private Label messageLabel; // 👈 thêm label hiển thị lỗi ra UI
 
     private final UserDAO userDAO = UserDAO.getInstance();
 
     @FXML
-    protected void onCreateAccount(ActionEvent event) {
+    private void onRegisterButtonClick() {
+        String username = usernameField.getText().trim();
         String email = emailField.getText().trim();
-        String pass = passwordField.getText();
-        String confirm = confirmField.getText();
+        String password = passwordField.getText().trim();
 
-        if (email.isEmpty() || pass.isEmpty() || confirm.isEmpty()) {
-            messageLabel.setText("❌ Please fill all fields.");
+        // --- Kiểm tra trống ---
+        if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            messageLabel.setText("Vui lòng nhập đầy đủ thông tin!");
+            animateError(usernameField);
+            animateError(emailField);
+            animateError(passwordField);
             return;
         }
 
-        if (!pass.equals(confirm)) {
-            messageLabel.setText("❌ Passwords do not match.");
+        // --- Kiểm tra định dạng email ---
+        if (!email.matches("^[\\w.-]+@gmail\\.com$")) {
+            messageLabel.setText("Email phải có dạng @gmail.com!");
+            animateError(emailField);
             return;
         }
 
-        if (pass.length() < 4) {
-            messageLabel.setText("❌ Password must be at least 4 characters.");
-            return;
-        }
-
-        boolean created = userDAO.createUser(email, pass);
-        if (created) {
-            messageLabel.setStyle("-fx-text-fill: green;");
-            messageLabel.setText("✅ Account created. Returning to Sign In...");
-            // go back to sign in after short delay or immediately
+        // --- Tạo tài khoản ---
+        boolean success = userDAO.createUser(username, email, password);
+        if (success) {
+            messageLabel.setText(""); // Xóa lỗi cũ
+            showAlert(Alert.AlertType.INFORMATION, "Đăng ký thành công!",
+                    "Chào mừng, " + username + "! Hãy đăng nhập nào 💙");
             try {
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project2/views/signin.fxml"));
-                Scene scene = new Scene(loader.load(), 420, 600);
-                stage.setScene(scene);
-            } catch (IOException e) {
+                Main.setRoot("signin");
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
-            messageLabel.setStyle("-fx-text-fill: red;");
-            messageLabel.setText("❌ Email already exists or error.");
+            messageLabel.setText("Email này đã được sử dụng!");
+            animateError(emailField);
         }
     }
 
     @FXML
-    protected void onBackToSignIn(ActionEvent event) {
-        try {
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project2/views/signin.fxml"));
-            Scene scene = new Scene(loader.load(), 420, 600);
-            stage.setScene(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void onLoginLink(javafx.event.ActionEvent event) {
+        Node node = ((Node) event.getSource()).getScene().getRoot();
+        TranslateTransition slide = new TranslateTransition(Duration.millis(400), node);
+        slide.setToX(800);
+        slide.setOnFinished(e -> {
+            try {
+                Main.setRoot("signin");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+        slide.play();
+    }
+
+    private void animateError(Control field) {
+        FadeTransition fade = new FadeTransition(Duration.millis(120), field);
+        fade.setFromValue(1.0);
+        fade.setToValue(0.3);
+        fade.setCycleCount(4);
+        fade.setAutoReverse(true);
+        fade.play();
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }
+
